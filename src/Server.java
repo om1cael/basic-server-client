@@ -22,7 +22,12 @@ public class Server {
         }
     }
 
-    public static synchronized void broadcastMessage(String message, ServerThread sender) {
+    public static synchronized void removeFromClients(ServerThread thread) {
+        System.out.println("Removing client " + thread);
+        clients.remove(thread);
+    }
+
+    public static synchronized void broadcastMessage(String message) {
         for(ServerThread client : clients) {
             if(!client.socket.isClosed()) {
                 System.out.println("sending to " + client);

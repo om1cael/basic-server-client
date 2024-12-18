@@ -15,13 +15,13 @@ public class ServerThread implements Runnable {
         try(BufferedReader receivedClientData = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
             String userInput;
 
-            System.out.println("local: " + socket.getLocalAddress());
-
             while((userInput = receivedClientData.readLine()) != null) {
-                Server.broadcastMessage(userInput, this);
+                Server.broadcastMessage(userInput);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
+        } finally {
+            Server.removeFromClients(this);
         }
     }
 
